@@ -362,7 +362,7 @@ size_t QRBG::AcquireBytesFromService(byte* buffer, size_t count) throw(ConnectEr
         Close();
         throw CommunicationError();
     }
-    if (ret != bytesToSend) {
+    if ((unsigned)ret != bytesToSend) {
         // failed to send complete data request to the server
         Close();
         throw CommunicationError();
