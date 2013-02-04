@@ -47,7 +47,7 @@ int main(int argc, char* argv[]) {
     try {
         printf("QRBG service returned byte: %x \n", rndService->getByte());
         printf("QRBG service returned integer: %x \n", rndService->getInt());
-        printf("QRBG service returned long integer: %x \n", rndService->getLongInt());
+        printf("QRBG service returned long integer: %lx \n", rndService->getLongInt());
         printf("QRBG service returned float: %f \n", rndService->getFloat());
         printf("QRBG service returned double: %f \n", rndService->getDouble());
         printf("Block of %d bytes (%.2f MiB) of data requested...\n", reqBlockSize, reqBlockSize / 1024.0 / 1024.0);
