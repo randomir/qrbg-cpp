@@ -108,8 +108,8 @@ const char* QRBG::ServerResponseRemedy[] = {
 QRBG::QRBG(size_t cacheSize /*= DEFAULT_CACHE_SIZE*/) /* throw(NetworkSubsystemError, bad_alloc) */
 : port(0), hSocket(-1)
 , outBuffer(NULL)
-, inBuffer(NULL)
 , outBufferSize(4096) /* WARNING: 'outBuffer' MUST be large enough to store whole request header before sending! */
+, inBuffer(NULL)
 , inBufferSize(cacheSize)
 , inBufferNextElemIdx(inBufferSize) {
     *szHostname = *szUsername = *szPassword = 0;
