@@ -37,8 +37,20 @@
 *
 */
 
+// definition of a platform flag
+// we support only Windows and Linux!
+#ifdef WIN32
+#   define PLATFORM_WIN
+#else
+#   define PLATFORM_LINUX
+#endif
+
 #pragma once
-#pragma warning( disable : 4290 )   // disable VC++ warning: "C++ exception specification ignored except to indicate a function is not __declspec(nothrow)"
+#ifdef _MSC_VER
+// disable VC++ warning: "C++ exception specification ignored except to 
+// indicate a function is not __declspec(nothrow)"
+#   pragma warning( disable : 4290 )   
+#endif
 
 #include <stddef.h>     // size_t
 #include <exception>    // class exception
@@ -57,14 +69,6 @@ typedef unsigned char       uint8;
 typedef unsigned short int  uint16;
 typedef unsigned int        uint32;
 typedef unsigned long long  uint64;
-
-// definition of a platform flag
-// we support only Windows and Linux!
-#ifdef WIN32
-#   define PLATFORM_WIN
-#else
-#   define PLATFORM_LINUX
-#endif
 
 #ifdef PLATFORM_LINUX
 #   include <sys/time.h>
