@@ -330,7 +330,7 @@ private:
     // (declared class wide for speed optimization)
     byte* outBuffer;
     const size_t outBufferSize;
-    
+
     // inBuffer is used to cache bytes for user's non-bulk data requests (getByte, getInt...)
     byte* inBuffer;
     size_t inBufferSize;
@@ -346,11 +346,11 @@ private:
     // connects to the service server (which is defined with defineServer(...) public method)
     void Connect() 
         throw(ConnectError);
-    
+
     // closes connection with the service server (if connection was established)
     void Close() 
         throw();
-    
+
     // fills the 'buffer' with 'count' bytes either from local cache, or from QRBG remote service
     size_t AcquireBytes(byte* buffer, size_t count) 
         throw(ConnectError, CommunicationError, ServiceDenied);
@@ -367,8 +367,14 @@ private:
     // tests if cache contains at least 'size' bytes
     bool IsCachedEnough(size_t size)
         throw();
-    
+
     // refills the inBuffer (local data cache) if it doesn't contain at least 'size' bytes of data
     void EnsureCachedEnough(size_t size) 
         throw(ConnectError, CommunicationError, ServiceDenied);
+
+    // returns a float in [0,1) constructed from lower 23 bits of uint32
+    float toFloat(uint32 bits);
+
+    // returns a double in [0,1) constructed from lower 52 bits of uint64
+    double toDouble(uint64 bits);
 };

@@ -629,45 +629,55 @@ IMPLEMENT_QRBG_ARRAY_GETTER(getInt64s, int64)
 // (these also work on all types of byte ordered machines)
 //
 
-// returns: normalized float in range [0, 1>
+// returns a float in [0,1) constructed from lower 23 bits of uint32
+float QRBG::toFloat(uint32 bits) {
+    float num;
+    bits = 0x3F800000uL | (bits & 0x00FFFFFFuL);
+    memcpy(&num, &bits, sizeof(num));
+    return num - 1.0f;
+}
+
+// returns a double in [0,1) constructed from lower 52 bits of uint64
+double QRBG::toDouble(uint64 bits) {
+    double num;
+    bits = 0x3FF0000000000000uLL | (bits & 0x000FFFFFFFFFFFFFuLL);
+    memcpy(&num, &bits, sizeof(num));
+    return num - 1.0;
+}
+
+// returns normalized float in range [0, 1)
 float QRBG::getFloat() throw(ConnectError, CommunicationError, ServiceDenied) {
-    uint32 data = 0x3F800000uL | (getInt32() & 0x00FFFFFFuL);
-    return *((float*)&data) - 1.0f;
+    return toFloat(getInt32());
 }
 
-// returns: normalized double in range [0, 1>
+// returns normalized double in range [0, 1)
 double QRBG::getDouble() throw(ConnectError, CommunicationError, ServiceDenied) {
-    uint64 data = 0x3FF0000000000000uLL | (getInt64() & 0x000FFFFFFFFFFFFFuLL);
-    return *((double*)&data) - 1.0;
+    return toDouble(getInt64());
 }
 
-// returns: array of normalized floats in range [0, 1>
+// returns array of normalized floats in range [0, 1)
 size_t QRBG::getFloats(float* buffer, size_t count) throw(ConnectError, CommunicationError, ServiceDenied) {
     ASSERT(sizeof(float) == sizeof(uint32));
 
     size_t acquired = AcquireBytes((byte*)buffer, sizeof(uint32)*count) / sizeof(uint32);
 
-    register uint32 data;
     register int idx = (int)acquired;
     while (--idx >= 0) {
-        data = 0x3F800000uL | (*((uint32*)(buffer+idx)) & 0x00FFFFFFuL);
-        buffer[idx] = *((float*)&data) - 1.0f;
+        buffer[idx] = toFloat(*((uint32*)(buffer+idx)));
     }
 
     return acquired;
 }
 
-// returns: array of normalized doubles in range [0, 1>
+// returns array of normalized doubles in range [0, 1)
 size_t QRBG::getDoubles(double* buffer, size_t count) throw(ConnectError, CommunicationError, ServiceDenied) {
     ASSERT(sizeof(double) == sizeof(uint64));
 
     size_t acquired = AcquireBytes((byte*)buffer, sizeof(uint64)*count) / sizeof(uint64);
 
-    register uint64 data;
     register int idx = (int)acquired;
     while (--idx >= 0) {
-        data = 0x3FF0000000000000uLL | (*((uint64*)(buffer+idx)) & 0x000FFFFFFFFFFFFFuLL);
-        buffer[idx] = *((double*)&data) - 1.0;
+        buffer[idx] = toDouble(*((uint64*)(buffer+idx)));
     }
 
     return acquired;
