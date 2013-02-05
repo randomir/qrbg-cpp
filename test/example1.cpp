@@ -61,7 +61,7 @@ int main(int argc, char* argv[]) {
     } catch (QRBG::CommunicationError e) {
         printf("Communication error! \n");
     } catch (QRBG::ServiceDenied e) {
-        printf("Service denied! \n", e.ServerResponse, e.RefusalReason);
+        printf("Service denied! \n");
         printf("--> %s! (%s.) \n", e.why(), e.cure());
     }
 

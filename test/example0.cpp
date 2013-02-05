@@ -13,10 +13,19 @@ int main(int argc, char* argv[]) {
     printf("QRBG service returned float: %f \n", rndService.getFloat());
     printf("QRBG service returned double: %f \n", rndService.getDouble());
 
-    // acquire arbitrary number of random bytes
-    const int size = 313;
-    byte buffer[size];
-    printf("Requesting %d random bytes.. ", size);
-    rndService.getBytes(buffer, size);
-    printf("Received.\n");
+    // acquire arbitrary number of random floats
+    const int size = 10;
+    float n[size];
+    printf("Requesting %d random floats.. ", size);
+    rndService.getFloats(n, size);
+    printf("Received:\n");
+    float min = 1, max = -1, sum = 0, avg;
+    for (int i = 0; i < size; i++) {
+        if (n[i] < min) min = n[i];
+        if (n[i] > max) max = n[i];
+        sum += n[i];
+        printf("%f\n", n[i]);
+    }
+    avg = sum / size;
+    printf("min = %f, max = %f, sum = %f, avg = %f \n", min, max, sum, avg);
 }
