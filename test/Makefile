@@ -1,13 +1,21 @@
 CC = g++
 CFLAGS = -Wall -O6
-SRC = ../src
+LIB = qrbgcpp
+SRCDIR = ../src
+OUT = $(patsubst %.cpp,%.out,$(wildcard example*.cpp))
 
 .PHONY: clean
 
-test: $(patsubst %.cpp,%.out,$(wildcard example*.cpp))
+linked: QRBG = $(SRCDIR)/*.cpp
+linked: INC = -I $(SRCDIR)
+linked: $(OUT)
 
-%.out: %.cpp $(SRC)/*.cpp
-	$(CC) $(CFLAGS) $? -o $@ -I $(SRC)
+shared: QRBG = -l $(LIB)
+shared: INC =
+shared: $(OUT)
+
+%.out: %.cpp
+	$(CC) $(CFLAGS) $? $(QRBG) $(INC) -o $@
 
 clean:
 	rm -f *.o *.out
