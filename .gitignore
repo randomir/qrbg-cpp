@@ -18,3 +18,23 @@
 *.exe
 *.out
 *.app
+
+# http://www.gnu.org/software/automake
+Makefile.in
+Makefile
+
+# http://www.gnu.org/software/autoconf
+/autom4te.cache
+/aclocal.m4
+/compile
+/configure
+/depcomp
+/install-sh
+/missing
+
+.libs/
+.deps/
+libtool
+/config.*
+ltmain.sh
+stamp-h1
