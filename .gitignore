@@ -38,3 +38,8 @@ libtool
 /config.*
 ltmain.sh
 stamp-h1
+
+# checkinstall generated
+backup-*.tgz
+description-pak
+doc-pak/
