@@ -39,20 +39,25 @@ QRBG C++ Client
 ---------------
 
 The C++ interface to QRBG service is provided through ``QRBG`` class, as defined
-in `src`_.
+in `src`_. The library can be compiled together with your source, or it can be
+installed as a shared Linux library (``libqrbg``) and linked dynamically.
 
 
 Installation
 ------------
 
-The library can be directly linked with your source, or it can be compiled and
-installed as a shared Linux library (``libqrbgcpp.so``).
+The easiest way to install QRBG as a shared library (on 64-bit Linux
+architectures) is from packages in ``dist/``. On Debian/Ubuntu::
 
-To install as a shared lib, you should have ``autotools`` and ``libtool``
-installed. The library build and install is then simple::
+    $ dpkg -i dist/libqrbg_0.4.0-1_amd64.deb
 
-   $ git clone https://github.com/randomir/qrbg-cpp
-   $ cd qrbg-cpp
+On RHEL/Fedora/CentOS/SUSE/Mandriva/SciLinux use the RPM package, e.g.::
+
+    $ yum install dist/libqrbg-0.4.0-2.x86_64.rpm
+
+On other configurations, you can install from source, in which case you should
+have ``autotools`` and ``libtool``. To build and install, type::
+
    $ ./autogen.sh
    $ ./configure && make
    $ sudo make install
